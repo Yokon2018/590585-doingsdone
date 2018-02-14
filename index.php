@@ -5,46 +5,45 @@ $show_complete_tasks = rand(0, 1);
 //Простой массив проектов
 $projects = ['Все','Входящие','Учеба','Работа','Домашние дела','Авто'];
 
-//Ассоциативные массивы
-$t1 = [
+//Двухмерный массивы
+$tasks_list = [
+[
 'task' => 'Собеседование в IT компании',
 'date' => '01.06.2018',
 'category' => 'Работа',
-'make' => 'Нет'
-];
-$t2 = [
+'make' => false
+],
+[
 'task' => 'Выполнить тестовое задание',
 'date' => '25.05.2018',
 'category' => 'Работа',
-'make' => 'Нет'
-];
-$t3 = [
+'make' => false
+],
+[
 'task' => 'Сделать задание первого раздела',
 'date' => '21.04.2018',
 'category' => 'Учеба',
-'make' => 'Да'
-];
-$t4 = [
+'make' => true
+],
+[
 'task' => 'Встреча с другом',
 'date' => '22.04.2018',
 'category' => 'Входящие',
-'make' => 'Нет'
-];
-$t5 = [
+'make' => false
+],
+[
 'task' => 'Купить корм для кота',
 'date' => 'Нет',
 'category' => 'Домашние дела',
-'make' => 'Нет'
-];
-$t6 = [
+'make' => false
+],
+[
 'task' => 'Заказать пиццу',
 'date' => 'Нет',
 'category' => 'Домашние дела',
-'make' => 'Нет'
-];
-
-//Двухмерный массив
-$tasks_list =  [$t1, $t2, $t3, $t4, $t5, $t6];
+'make' => false
+]
+]
 
 ?>
 <!DOCTYPE html>
@@ -92,8 +91,7 @@ $tasks_list =  [$t1, $t2, $t3, $t4, $t5, $t6];
                     					
 					<ul class="main-navigation__list">
 					
-					  <?php foreach ($projects as $k):?>
-					  
+					  <?php foreach ($projects as $k):?>					  
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link <?= ($k == "Все" ? "main-navigation__list-item--active" : "")?>" href="#"><?=$k?></a>
                             <span class="main-navigation__list-item-count">24</span>
@@ -133,18 +131,16 @@ $tasks_list =  [$t1, $t2, $t3, $t4, $t5, $t6];
                     </label>
                 </div>
 
-                <table class="tasks">
-                    
-					<?php foreach ($tasks_list as $key => $val): ?>
-					    <tr class="tasks__item task task <?= ($val['make'] == "Да" ? "task--completed" : "")?>">
+                <table class="tasks">                    
+					<?php foreach ($tasks_list as $task): ?>
+					    <tr class="tasks__item task task <?= ($task['make'] ? "task--completed" : "")?>">
                              <td class="task__select">
                                  <label class="checkbox task__checkbox">
                                       <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                                      <span class="checkbox__text"><?=$val['task']; ?></span>
+                                      <span class="checkbox__text"><?=$task['task']; ?></span>
                                  </label>
                              </td>
-                             <td class="task__date"><?=$val['date']; ?></td>
-							 
+                             <td class="task__date"><?=$task['date']; ?></td>							 
                              <td class="task__controls"></td>
                         </tr>
 					<?php endforeach; ?>
