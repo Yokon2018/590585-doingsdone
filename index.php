@@ -5,6 +5,27 @@ $show_complete_tasks = rand(0, 1);
 //Простой массив проектов
 $projects = ['Все','Входящие','Учеба','Работа','Домашние дела','Авто'];
 
+//Объявляю функцию
+function task_counts($tasks_list, $k)
+	{
+		$number = 0;		
+		foreach ($tasks_list as $key => $task)
+            {
+				foreach ($task as $inner_key => $value)
+				{
+					if (($inner_key == "category") and ($value == $k))
+						
+                        $number = $number + 1;
+						
+                    else if ($k == "Все")
+                        
+					$number = count($tasks_list);						
+				}					
+                        			
+			}
+          echo $number;							
+	}
+	
 //Двухмерный массивы
 $tasks_list = [
 [
@@ -94,7 +115,7 @@ $tasks_list = [
 					  <?php foreach ($projects as $k):?>					  
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link <?= ($k == "Все" ? "main-navigation__list-item--active" : "")?>" href="#"><?=$k?></a>
-                            <span class="main-navigation__list-item-count">24</span>
+                            <span class="main-navigation__list-item-count"><?php task_counts($tasks_list, $k)?></span>
                         </li>                    
 					  <?php endforeach; ?>
 					  
