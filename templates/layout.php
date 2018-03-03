@@ -42,9 +42,10 @@
                 <nav class="main-navigation">
                     					
 					<ul class="main-navigation__list">
-					  <?php foreach ($projects as $project_element):?>					  
+					  <?php foreach ($projects as $key => $project_element):?>					  
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link <?= ($project_element == "Все" ? "main-navigation__list-item--active" : "")?>" href="#"><?=$project_element?></a>
+                            <a class="main-navigation__list-item-link <?= ($project_element == "Все" ? "main-navigation__list-item--active" : "")?>"
+							href="http://590585-doingsdone/index.php<?=($project_element == "Все" ? "" : "?project=$key")?>" ><?=$project_element?></a>
                             <span class="main-navigation__list-item-count"><?php echo task_counts($tasks_list, $project_element)?></span>
                         </li>                    
 					  <?php endforeach; ?>

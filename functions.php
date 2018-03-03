@@ -22,7 +22,7 @@ function task_counts($tasks_list, $project_element)
 					if ($task["category"] == $project_element)
                         $number++;         			
 			}
-          return $number;							
+        return $number;							
 	}
 
 function esc($str)
@@ -30,3 +30,39 @@ function esc($str)
 	    $text = strip_tags($str);
 	    return $text;
     }
+	
+function task_dates($task)
+    { 	
+	    $curdate = strtotime(date('d.m.Y.H.i'));
+		if ($task["date"] == "Нет"){
+			 return '';
+	    } else {
+	                 $task_date = strtotime($task["date"]);
+		             
+	                 $diff_date = $task_date - $curdate;
+	                 $hours = $diff_date/3600;
+			         if ($hours < 24) {
+			         	    return "task--important";	
+			         } else {
+                            return "";
+			         		}	
+		        }					
+	}	
+	
+function request($tasks_list)
+	$project = null;
+
+if (isset($_GET['project'])) {
+	$project_id = $_GET['project'];
+
+	foreach ($tasks_list as $key => $item) {
+		if ($key == $project_id) {
+			$project = $item;
+			break;
+		}
+	}
+}
+
+if (!$gif) {
+	http_response_code(404);
+}
