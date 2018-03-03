@@ -49,20 +49,26 @@ function task_dates($task)
 		        }					
 	}	
 	
-function request($tasks_list)
-	$project = null;
-
-if (isset($_GET['project'])) {
-	$project_id = $_GET['project'];
-
-	foreach ($tasks_list as $key => $item) {
-		if ($key == $project_id) {
-			$project = $item;
-			break;
-		}
-	}
-}
-
-if (!$gif) {
-	http_response_code(404);
-}
+function request($tasks_list, $projects)
+    {	
+        if (isset($_GET['project']))
+			{
+	             $project_id = $_GET['project'];
+                 $tasks_list_filtered = [];
+	             foreach ($tasks_list as $item) 
+				    {
+		                 if ($item['category'] == $project_id) 
+					        {
+			                     $tasks_list_filtered[] = $item;
+		                    } 
+	                }
+					return $tasks_list_filtered;  				 
+			}
+		else 
+                {
+			         $tasks_list_filtered = $tasks_list;
+					 return $tasks_list_filtered;
+                }
+	          
+    }
+	

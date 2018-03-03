@@ -24,7 +24,7 @@
                 </div>
 
                 <table class="tasks">                    
-					<?php foreach ($tasks_list as $task): ?>
+					<?php foreach ($tasks_list_filtered as $task): ?>
 					    <tr class="tasks__item task task <?= ($task['make'] ? "task--completed" : "")?> <?=task_dates($task)?>">
                              <td class="task__select">
                                  <label class="checkbox task__checkbox">

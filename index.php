@@ -45,8 +45,15 @@ $tasks_list = [
     'make' => false
     ]
 ];
-
-$content = renderTemplate ('templates/index.php', ['tasks_list' => $tasks_list, 'projects' => $projects, 'show_complete_tasks' => $show_complete_tasks]);
+if (isset($_GET['project'])) {
+    $project_id = $_GET['project'];
+    if (!in_array($project_id, $projects)) {
+        http_response_code(404);
+        die();
+    }
+}
+$tasks_list_filtered = request ($tasks_list, $projects);
+$content = renderTemplate ('templates/index.php', ['tasks_list_filtered' => $tasks_list_filtered, 'projects' => $projects, 'show_complete_tasks' => $show_complete_tasks]);
 $layout_content = renderTemplate('templates/layout.php', ['content' => $content, 'title' => $title, 'user_name' => $user_name, 'projects' => $projects, 'tasks_list' => $tasks_list]);
 
 print($layout_content);
