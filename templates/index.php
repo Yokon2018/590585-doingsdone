@@ -25,7 +25,7 @@
 
                 <table class="tasks">                    
 					<?php foreach ($tasks_list_filtered as $task): ?>
-					    <tr class="tasks__item task task <?= ($task['make'] ? "task--completed" : "")?> <?=task_dates($task)?>">
+					    <tr class="tasks__item task task <?= ($task['make'] ? "task--completed" : "")?> <?=checking_remaining_time($task)?>">
                              <td class="task__select">
                                  <label class="checkbox task__checkbox">
                                       <input class="checkbox__input visually-hidden" type="checkbox" checked>

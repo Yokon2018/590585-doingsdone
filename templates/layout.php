@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
-<body><!--class="overlay"-->
+<body class="<?=($push_task_bottom == "true" || count($errors) ? "overlay" : "")?>">
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -19,7 +18,7 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="#">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="http://590585-doingsdone/index.php?add">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
@@ -42,11 +41,11 @@
                 <nav class="main-navigation">
                     					
 					<ul class="main-navigation__list">
-					  <?php foreach ($projects as $key => $project_element):?>					  
+					  <?php foreach ($categories as $key => $project_element):?>					  
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link <?= ($project_element == "Все" ? "main-navigation__list-item--active" : "")?>"
-							href="http://590585-doingsdone/index.php<?=($project_element == "Все" ? "" : "?project=$project_element")?>" ><?=$project_element?></a>
-                            <span class="main-navigation__list-item-count"><?php echo task_counts($tasks_list, $project_element)?></span>
+							href="http://590585-doingsdone/index.php<?=($project_element == "Все" ? "" : "?project=$key")?>" ><?=$project_element?></a>
+                            <span class="main-navigation__list-item-count"><?php echo task_counts($list_of_all_tasks, $project_element)?></span>
                         </li>                    
 					  <?php endforeach; ?>
 					  
@@ -58,7 +57,7 @@
             </section>
 
             <main class="content__main">
-                <?=$content;?>
+                <?=$content;?>		
             </main>
         </div>
     </div>
@@ -102,8 +101,6 @@
         </div>
     </div>
 </footer>
-
-
-
+<?=$form;?>
 </body>
 </html>

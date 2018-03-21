@@ -6,8 +6,9 @@ $show_complete_tasks = rand(0, 1);
 
 $title = 'Главная';
 $user_name = 'Антон';
-$projects = ['Все','Входящие','Учеба','Работа','Домашние дела','Авто'];
-$tasks_list = [
+$categories = ['Все','Входящие','Учеба','Работа','Домашние дела','Авто'];
+$projects_main = ['Входящие','Учеба','Работа','Домашние дела','Авто'];
+$list_of_all_tasks = [
     [
     'task' => 'Собеседование в IT компании',
     'date' => '01.06.2018',
@@ -45,17 +46,45 @@ $tasks_list = [
     'make' => false
     ]
 ];
+
 if (isset($_GET['project'])) {
     $project_id = $_GET['project'];
-    if (!in_array($project_id, $projects)) {
+    if (!in_array($categories[$project_id], $categories)) {
         http_response_code(404);
         die();
     }
+	$tasks_list_filtered = create_array_with_filtered_tasks($list_of_all_tasks, $categories);
+	} else {
+	     $tasks_list_filtered = $list_of_all_tasks;
+	}
+	
+
+$errors = [];
+$push_task_bottom = "false";
+$form = "";
+
+if (isset($_GET['add'])) {
+    $push_task_bottom = "true";
+    $form = renderTemplate ('templates/form.php', ['projects_main' => $projects_main]);
+} 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	$errors = empty_form_fields();
+	if (count($errors)) {
+		$form = renderTemplate ('templates/form.php', ['errors' => $errors,'projects_main' => $projects_main]);
+	} else {
+		$new_task = create_array_with_new_task();
+		array_unshift($list_of_all_tasks, $new_task);
+	}
+			
+    if (isset($_FILES['preview'])) {
+	    $tmp_name = $_FILES['preview']['tmp_name'];
+	    $path = $_FILES['preview']['name'];
+	    $file_path = $_SERVER['DOCUMENT_ROOT']."/";
+	    move_uploaded_file($tmp_name, $file_path . $path);
 }
-$tasks_list_filtered = request ($tasks_list, $projects);
-$content = renderTemplate ('templates/index.php', ['tasks_list_filtered' => $tasks_list_filtered, 'projects' => $projects, 'show_complete_tasks' => $show_complete_tasks]);
-$layout_content = renderTemplate('templates/layout.php', ['content' => $content, 'title' => $title, 'user_name' => $user_name, 'projects' => $projects, 'tasks_list' => $tasks_list]);
+}
 
+$content = renderTemplate ('templates/index.php', ['tasks_list_filtered' => $tasks_list_filtered, 'categories' => $categories, 'show_complete_tasks' => $show_complete_tasks]);
+$layout_content = renderTemplate('templates/layout.php', ['errors' => $errors, 'form' => $form, 'push_task_bottom' => $push_task_bottom, 'content' => $content, 'title' => $title, 'user_name' => $user_name, 'categories' => $categories, 'list_of_all_tasks' => $list_of_all_tasks]);
 print($layout_content);
-
-?>
